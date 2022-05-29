@@ -62,7 +62,7 @@ extension CountrieViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let viewController = storyboard?.instantiateViewController(withIdentifier: "CityViewController")as? CityViewController else  {return}
         viewController.title = "\(countries[indexPath.row].korean_name)"
-        viewController.cun = countries[indexPath.row].asset_name
+        viewController.countriesAsset = countries[indexPath.row].asset_name
         navigationController?.pushViewController(viewController, animated: true)
         print("왜안되는거야\(countries[indexPath.row])")
         

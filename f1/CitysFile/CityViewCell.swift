@@ -13,8 +13,8 @@ class CityViewCell: UITableViewCell {
     
     @IBOutlet weak var cityName: UILabel!
     
-    @IBOutlet weak var o1: UILabel!
+    @IBOutlet weak var celsius: UILabel!
     
-    @IBOutlet weak var o2: UILabel!
+    @IBOutlet weak var PreciPitationProbability: UILabel!
     
 }

@@ -9,7 +9,7 @@ import UIKit
 
 class CityViewController: UIViewController {
     var citys : [City] = []
-    var cun: String?
+    var countriesAsset: String?
     @IBOutlet weak var citysVIewController: UITableView!
     override func viewDidLoad() {
         
@@ -19,7 +19,7 @@ class CityViewController: UIViewController {
         
         let jsonDecoder: JSONDecoder = JSONDecoder()
         
-        guard let cun = cun, let dataAsset: NSDataAsset = NSDataAsset(name: cun) else {
+        guard let countriesAssetName = countriesAsset, let dataAsset: NSDataAsset = NSDataAsset(name: countriesAssetName) else {
             return
         }
         do {
@@ -41,35 +41,29 @@ extension CityViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CityViewCell", for: indexPath) as? CityViewCell else {
             return UITableViewCell()
-            }
+        }
         
         let data = citys[indexPath.row]
         
         cell.cityName.text = data.city_name
-        //여기서도 썹시가 10 이상일때 색상을
-        cell.o1.text = "썹씨\(data.celsius) / 화씨\(round((data.celsius * 9/5 + 32) * 10) / 10)"
-       //강수확률이 60이상일때 텍스트필트의 색상을 바꾸고 싶다.
-        if data.rainfall_probability == 10 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 20 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 30 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 40 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 50 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 60 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 70 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 80 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
-        } else if data.rainfall_probability == 90 {
-            cell.o2.text = "강수확률 \(data.rainfall_probability)%"
+        
+        //여기서도 썹시가 10 이상일때 색상을 바꾸고싶다.
+        if data.celsius <= 10 {
+            cell.celsius.textColor = UIColor.blue
+            cell.celsius.text = "썹씨\(data.celsius) / 화씨\(round((data.celsius * 9/5 + 32) * 10) / 10)"
+            
+        }else{
+            
+        cell.celsius.text = "썹씨\(data.celsius) / 화씨\(round((data.celsius * 9/5 + 32) * 10) / 10)"
         }
+        //강수확률이 60이상일때 텍스트필트의 색상을 바꾸고 싶다.
         
-        
+        if data.rainfall_probability >= 60 {
+            cell.PreciPitationProbability.textColor = UIColor.orange
+            cell.PreciPitationProbability.text = "강수확률 \(data.rainfall_probability)%"
+        } else{
+            cell.PreciPitationProbability.text = "강수확률 \(data.rainfall_probability)%"
+        }
         if data.state == 10 {
             cell.seconImage.image = UIImage(named: "sunny")
         } else if data.state == 11 {
@@ -81,7 +75,7 @@ extension CityViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-
+    
     //3번쨰 뷰로 넘어가라
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
